@@ -3,37 +3,36 @@ version: '3.8'
 services:
   odin:
     container_name: odin
-    image: patrikkukic/odin:latest
+    image: aichenskyi/odin:latest
     ports:
       - "1234:1234"
     depends_on:
       - bor
   bor:
     container_name: bor
-    image: patrikkukic/bor:latest
+    image: aichenskyi/bor:latest
     ports:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
       - HNSWLIB_NO_NATIVE=1
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - MOCK=${MOCK}
+      - LLM_MODEL_NAME=${LLM_MODEL_NAME}
+      - MOCK="False"
     volumes:
       - chroma_data:/etc/chroma
     depends_on:
       - memgraph
   memgraph:
-    image: memgraph/memgraph-platform:2.9.0-memgraph2.9.0-lab2.7.1-mage1.8
+    image: memgraph/memgraph-mage:1.15-memgraph-2.15
     container_name: memgraph
-    ports: 
+    ports:
       - "7687:7687"
       - "7444:7444"
-      - "3000:3000"
     environment:
       - MEMGRAPH="--log-level=TRACE"
     volumes:
       - mg_lib:/var/lib/memgraph
-    entrypoint: ["/usr/bin/supervisord"]
 
 volumes:
   chroma_data:

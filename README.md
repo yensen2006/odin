@@ -88,6 +88,7 @@ Before you begin, make sure you have the following:
       1. You will need to create a `.env` file inside the ODIN folder with your OpenAI API key to access the app features. It should look like this:
         ```
         OPENAI_API_KEY=YOUR_API_KEY
+        LLM_MODEL_NAME=gpt-4 # try with other models at your own risk 
         ```
         Where YOUR_API_KEY is a key you can get [here](https://openai.com/).
 
